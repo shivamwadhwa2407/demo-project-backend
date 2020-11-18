@@ -51,7 +51,7 @@ def login():
         print(data)
         if (len(data) == 0):
             obj = {"status":404, "message": "User Doesn't Exists" }
-            response = app.response_class(response={ }, status=404, mimetype='application/json')
+            response = app.response_class(response={ json.dumps(obj) }, status=404, mimetype='application/json')
         else:
             data = data[0]
             if requesData["password"] == data["password"]:
