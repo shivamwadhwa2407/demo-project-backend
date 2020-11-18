@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-# from models import todo  # call model file
 from flask_cors import CORS  # to avoid cors error in different frontend like react js or any other
 from pymongo import MongoClient
 import pymongo
@@ -17,17 +16,13 @@ def mongoconnection():
         constantsData = json.load(constants)
 
     global uri 
-    # uri = "mongodb://" +constantsData['username'] + ":" + constantsData['password'] + "@" + constantsData["server"] +":" + constantsData['port'] + "/dgsafe?ssl=false&authSource=dgsafe"
-    # 'mongodb://dgadminreadWrite:Dg-Tt-Wh-2020@11.0.24.31:52498/dgsafe?ssl=false&authSource=dgsafe'
     uri = "mongodb+srv://IamWaddy:"+ constantsData['password'] + "@cluster-alpha.1vji7.mongodb.net/demoDatabase?retryWrites=true&w=majority"
     print (uri)
     client = pymongo.MongoClient(uri)
-    # client = MongoClient(uri)
     global demoDatabase
     demoDatabase = client.demoDatabase
     global loginModel
     loginModel = demoDatabase["loginModel"]
-    # portfolio = client["portfolio"]
 
 
 mongoconnection()
@@ -35,12 +30,12 @@ mongoconnection()
 app = Flask(__name__)
 CORS(app)
 
-# todo = todo.Todo()
 
 def data_sanitizer(data):
     data_sanitized = json.loads(json_util.dumps(data))
     return data_sanitized
 
+# API for Login 
 @app.route('/login/', methods=['POST'])
 def login():
     requesData = json.loads(request.data)
